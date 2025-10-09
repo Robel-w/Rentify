@@ -139,10 +139,8 @@ const Properties: React.FC = () => {
           <p className="text-gray-600">Find your perfect home from our verified listings</p>
         </div>
 
-        {/* Search and Filter Bar */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
           <div className="flex flex-col lg:flex-row gap-4">
-            {/* Search Input */}
             <div className="flex-1">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -156,7 +154,6 @@ const Properties: React.FC = () => {
               </div>
             </div>
 
-            {/* Filter Toggle Button */}
             <div className="flex items-center space-x-3">
               <button
                 onClick={() => setShowFilters(!showFilters)}
@@ -184,11 +181,9 @@ const Properties: React.FC = () => {
             </div>
           </div>
 
-          {/* Advanced Filters */}
           {showFilters && (
             <div className="mt-6 pt-6 border-t border-gray-200">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {/* Location */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
                   <input
@@ -211,7 +206,6 @@ const Properties: React.FC = () => {
                   />
                 </div>
 
-                {/* Property Type */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Property Type</label>
                   <select
@@ -229,7 +223,6 @@ const Properties: React.FC = () => {
                   </select>
                 </div>
 
-                {/* Furnishing */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Furnishing</label>
                   <select
@@ -244,7 +237,6 @@ const Properties: React.FC = () => {
                   </select>
                 </div>
 
-                {/* Price Range */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Min Price</label>
                   <input
@@ -267,7 +259,6 @@ const Properties: React.FC = () => {
                   />
                 </div>
 
-                {/* Bedrooms */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Min Bedrooms</label>
                   <select
@@ -285,7 +276,6 @@ const Properties: React.FC = () => {
                   </select>
                 </div>
 
-                {/* Bathrooms */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Min Bathrooms</label>
                   <select
@@ -303,7 +293,6 @@ const Properties: React.FC = () => {
                   </select>
                 </div>
 
-                {/* Sort By */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Sort By</label>
                   <select
@@ -321,7 +310,6 @@ const Properties: React.FC = () => {
                 </div>
               </div>
 
-              {/* Amenities */}
               <div className="mt-6">
                 <label className="block text-sm font-medium text-gray-700 mb-3">Amenities</label>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -354,7 +342,6 @@ const Properties: React.FC = () => {
           )}
         </div>
 
-        {/* Results Count */}
         <div className="mb-6">
           <p className="text-gray-600">
             {loading ? 'Loading properties...' : `Found ${properties.length} propert${properties.length === 1 ? 'y' : 'ies'}`}

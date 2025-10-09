@@ -35,7 +35,6 @@ const Dashboard: React.FC = () => {
         setProperties(propertiesResponse.data.results || propertiesResponse.data || []);
         setApplications(applicationsResponse.data.results || applicationsResponse.data || []);
 
-        // Get recent applications (last 5)
         const recent = (applicationsResponse.data.results || applicationsResponse.data || [])
           .sort((a: RentalApplication, b: RentalApplication) => 
             new Date(b.submitted_at).getTime() - new Date(a.submitted_at).getTime()
@@ -98,7 +97,6 @@ const Dashboard: React.FC = () => {
           </p>
         </div>
 
-        {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {user?.role === 'homeowner' ? (
             <>
@@ -214,9 +212,7 @@ const Dashboard: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
-            {/* Recent Applications */}
             <div className="bg-white rounded-lg shadow-md p-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-semibold text-gray-900 flex items-center">
@@ -286,7 +282,6 @@ const Dashboard: React.FC = () => {
               )}
             </div>
 
-            {/* Properties (for homeowners) */}
             {user?.role === 'homeowner' && (
               <div className="bg-white rounded-lg shadow-md p-6">
                 <div className="flex items-center justify-between mb-6">
@@ -357,9 +352,7 @@ const Dashboard: React.FC = () => {
             )}
           </div>
 
-          {/* Sidebar */}
           <div className="space-y-8">
-            {/* Quick Actions */}
             <div className="bg-white rounded-lg shadow-md p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
               <div className="space-y-3">
@@ -408,7 +401,6 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
 
-            {/* Activity Summary */}
             <div className="bg-white rounded-lg shadow-md p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Activity Summary</h3>
               <div className="space-y-4">

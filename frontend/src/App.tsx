@@ -27,7 +27,6 @@ function App() {
               <Route path="/properties" element={<Properties />} />
               <Route path="/properties/:id" element={<PropertyDetail />} />
               
-              {/* Protected Routes */}
               <Route path="/dashboard" element={
                 <ProtectedRoute>
                   <Dashboard />
@@ -49,7 +48,6 @@ function App() {
                 </ProtectedRoute>
               } />
               
-              {/* Catch all route */}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>
