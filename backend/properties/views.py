@@ -74,8 +74,8 @@ class PropertyCreateView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     
     def perform_create(self, serializer):
-        if self.request.user.role != 'homeowner':
-            raise permissions.PermissionDenied("Only homeowners can create properties")
+       # if self.request.user.role != 'homeowner':
+        #    raise permissions.PermissionDenied("Only homeowners can create properties")
         serializer.save(owner=self.request.user)
 
 

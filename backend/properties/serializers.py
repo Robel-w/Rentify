@@ -58,50 +58,36 @@ class PropertyDetailSerializer(serializers.ModelSerializer):
     def get_application_count(self, obj):
         return obj.applications.count()
 
-
 class PropertyCreateUpdateSerializer(serializers.ModelSerializer):
-    
-    images = PropertyImageSerializer(many=True, required=False)
-    amenities = PropertyAmenitySerializer(many=True, required=False)
+    property_images = serializers.ListField(
+        child=serializers.ImageField(max_length=100000, allow_empty_file=False),
+        write_only=True,
+        required=False
+    )
     
     class Meta:
         model = Property
-        fields = '__all__'
-        read_only_fields = ('owner', 'created_at', 'updated_at', 'is_approved')
+        exclude = ['owner']  # Remove is_approved from exclude
+        read_only_fields = ('created_at', 'updated_at', 'is_approved')  # Add is_approved here
     
     def create(self, validated_data):
-        images_data = validated_data.pop('images', [])
-        amenities_data = validated_data.pop('amenities', [])
+        images_data = validated_data.pop('property_images', [])
+        validated_data['owner'] = self.context['request'].user
+        
+        # AUTO-APPROVE FOR DEVELOPMENT
+        validated_data['is_approved'] = True
         
         property_obj = Property.objects.create(**validated_data)
         
-        for image_data in images_data:
-            PropertyImage.objects.create(property=property_obj, **image_data)
-        
-        for amenity_data in amenities_data:
-            PropertyAmenity.objects.create(property=property_obj, **amenity_data)
+        for i, image_data in enumerate(images_data):
+            PropertyImage.objects.create(
+                property=property_obj,
+                image=image_data,
+                order=i,
+                is_primary=(i == 0)
+            )
         
         return property_obj
-    
-    def update(self, instance, validated_data):
-        images_data = validated_data.pop('images', [])
-        amenities_data = validated_data.pop('amenities', [])
-        
-        for attr, value in validated_data.items():
-            setattr(instance, attr, value)
-        instance.save()
-        
-        if images_data:
-            instance.images.all().delete()
-            for image_data in images_data:
-                PropertyImage.objects.create(property=instance, **image_data)
-        
-        if amenities_data:
-            instance.amenities.all().delete()
-            for amenity_data in amenities_data:
-                PropertyAmenity.objects.create(property=instance, **amenity_data)
-        
-        return instance
 
 
 class PropertySearchSerializer(serializers.Serializer):
