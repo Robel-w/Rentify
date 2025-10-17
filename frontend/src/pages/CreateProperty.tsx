@@ -102,10 +102,9 @@ const CreateProperty: React.FC = () => {
         }
       });
 
-      // Add images
-      uploadedImages.forEach((image, index) => {
-        formData.append(`images`, image);
-        formData.append(`image_${index}_is_primary`, index === 0 ? 'true' : 'false');
+      // Add images as property_images (backend expects this field name)
+      uploadedImages.forEach((image) => {
+        formData.append(`property_images`, image);
       });
 
       await propertiesAPI.createProperty(formData);

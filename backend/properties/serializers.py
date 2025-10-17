@@ -27,7 +27,7 @@ class PropertyListSerializer(serializers.ModelSerializer):
         model = Property
         fields = ('id', 'title', 'property_type', 'city', 'state', 'bedrooms', 'bathrooms',
                  'monthly_rent', 'available_from', 'status', 'is_featured', 'is_approved',
-                 'owner', 'primary_image', 'image_count', 'created_at')
+                 'owner', 'primary_image', 'image_count', 'created_at', 'latitude', 'longitude', 'square_feet')
     
     def get_primary_image(self, obj):
         primary_image = obj.images.filter(is_primary=True).first()
