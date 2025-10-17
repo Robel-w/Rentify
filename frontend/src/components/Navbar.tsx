@@ -12,6 +12,7 @@ const Navbar: React.FC = () => {
     logout();
     navigate('/');
   };
+  
 
   return (
     <nav className="bg-white shadow-lg">
@@ -51,6 +52,13 @@ const Navbar: React.FC = () => {
                   <FileText className="h-4 w-4" />
                   <span>Applications</span>
                 </Link>
+
+                <li>
+                    <Link to="/map" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900">
+                    Map
+                    </Link>
+                </li>
+
 
                 <div className="relative group">
                   <button className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
@@ -124,7 +132,7 @@ const Navbar: React.FC = () => {
                   {user.role === 'homeowner' && (
                     <Link
                       to="/create-property"
-                      className="flex items-center space-x-2 block px-3 py-2 text-gray-700 hover:text-primary-600 rounded-md text-base font-medium"
+                      className="flex items-center space-x-2 px-3 py-2 text-gray-700 hover:text-primary-600 rounded-md text-base font-medium"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       <Plus className="h-4 w-4" />
@@ -134,7 +142,7 @@ const Navbar: React.FC = () => {
                   
                   <Link
                     to="/applications"
-                    className="flex items-center space-x-2 block px-3 py-2 text-gray-700 hover:text-primary-600 rounded-md text-base font-medium"
+                    className="flex items-center space-x-2 px-3 py-2 text-gray-700 hover:text-primary-600 rounded-md text-base font-medium"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     <FileText className="h-4 w-4" />

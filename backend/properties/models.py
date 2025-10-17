@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator, MaxValueValidator
-
+from .utils.geocoding import geocode_address
 User = get_user_model()
 
 
@@ -37,6 +37,7 @@ class Property(models.Model):
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
     zip_code = models.CharField(max_length=10)
+    location = models.CharField(max_length = 255, default='unknown location')
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
     longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
     bedrooms = models.PositiveIntegerField(validators=[MinValueValidator(0)])
@@ -64,6 +65,15 @@ class Property(models.Model):
     available_from = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+    # def save(self, *args, **kwargs):
+    #     if not self.latitude or not self.longitude:
+    #         lat, lon = geocode_address(self.location)
+    #         self.latitude = lat
+    #         self.longitude = lon
+    #     super().save(*args, **kwargs)    
+
     
     class Meta:
         ordering = ['-created_at']

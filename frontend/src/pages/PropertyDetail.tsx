@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { propertiesAPI } from '../services/api';
+import { propertiesAPI, applicationsAPI } from '../services/api';
 import { Property } from '../types';
 import { 
   MapPin, 
@@ -29,6 +29,7 @@ import {
 const PropertyDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -52,14 +53,30 @@ const PropertyDetail: React.FC = () => {
     fetchProperty();
   }, [id]);
 
-  const handleApplyNow = () => {
+  const handleApplyNow = async () => {
     if (!user) {
-      // Redirect to login
-      window.location.href = '/login';
+      navigate('/login');
       return;
     }
-    // TODO: Implement application form functionality
+
+    if (!property) {
+      alert('Property not found. Please try again.');
+      return;
+    }
+
+    try {
+      const response = await applicationsAPI.createApplication({ 
+        property: property.id 
+      });
+      if (response.status === 201) {
+        setApplicationSuccess(true);
+      }
+    } catch (error) {
+      console.error('Application error:', error);
+      alert('Failed to apply. Please try again.');
+    }
   };
+
 
 
   const getAmenityIcon = (amenity: string) => {
@@ -413,3 +430,4 @@ const PropertyDetail: React.FC = () => {
 };
 
 export default PropertyDetail;
+

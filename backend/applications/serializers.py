@@ -51,6 +51,22 @@ class RentalApplicationDetailSerializer(serializers.ModelSerializer):
 class RentalApplicationCreateSerializer(serializers.ModelSerializer):
     
     documents = ApplicationDocumentSerializer(many=True, required=False)
+    move_in_date = serializers.DateField(required=False)
+    message = serializers.CharField(required=False, allow_blank=True)
+    lease_duration_months = serializers.IntegerField(required=False, default=12)
+    monthly_income = serializers.DecimalField(max_digits=10, decimal_places=2, required=False, allow_null=True)
+    employment_status = serializers.CharField(required=False, allow_blank=True)
+    employer_name = serializers.CharField(required=False, allow_blank=True)
+    employer_phone = serializers.CharField(required=False, allow_blank=True)
+    reference1_name = serializers.CharField(required=False, allow_blank=True)
+    reference1_phone = serializers.CharField(required=False, allow_blank=True)
+    reference1_relationship = serializers.CharField(required=False, allow_blank=True)
+    reference2_name = serializers.CharField(required=False, allow_blank=True)
+    reference2_phone = serializers.CharField(required=False, allow_blank=True)
+    reference2_relationship = serializers.CharField(required=False, allow_blank=True)
+    has_pets = serializers.BooleanField(required=False, default=False)
+    pet_details = serializers.CharField(required=False, allow_blank=True)
+    additional_notes = serializers.CharField(required=False, allow_blank=True)
     
     class Meta:
         model = RentalApplication

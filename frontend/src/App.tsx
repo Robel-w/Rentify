@@ -13,6 +13,8 @@ import Applications from './pages/Applications';
 import CreateProperty from './pages/CreateProperty';
 import ProtectedRoute from './components/ProtectedRoute';
 
+// import MapPages from './pages/MapPages';
+import MapPages from './pages/MapPages';
 function App() {
   return (
     <AuthProvider>
@@ -26,7 +28,10 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/properties" element={<Properties />} />
               <Route path="/properties/:id" element={<PropertyDetail />} />
+              <Route path="/map" element={<MapPages />} />
+
               
+
               <Route path="/dashboard" element={
                 <ProtectedRoute>
                   <Dashboard />
@@ -58,3 +63,4 @@ function App() {
 }
 
 export default App;
+

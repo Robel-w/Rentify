@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Property, PropertyImage, PropertyAmenity
 from accounts.serializers import UserSerializer
-
+from .utils.geocoding import geocode_address
 
 class PropertyImageSerializer(serializers.ModelSerializer):
     
@@ -76,7 +76,21 @@ class PropertyCreateUpdateSerializer(serializers.ModelSerializer):
         
         # AUTO-APPROVE FOR DEVELOPMENT
         validated_data['is_approved'] = True
-        
+
+        full_address = f"{validated_data.get('address', '')}, {validated_data.get('city', '')}, {validated_data.get('state', '')}"
+        lat, lon = geocode_address(full_address)
+          # 🌍 Geocode address before creating
+        full_address = f"{validated_data.get('address', '')}, {validated_data.get('city', '')}, {validated_data.get('state', '')}"
+        lat, lon = geocode_address(full_address)
+
+        # 🪄 Debug print (you’ll see this in your terminal)
+        print(f"[🛰️ GEOCODING CREATE] Address: {full_address} → lat: {lat}, lon: {lon}")
+
+
+        validated_data['latitude'] = lat
+        validated_data['longitude'] = lon
+
+
         property_obj = Property.objects.create(**validated_data)
         
         for i, image_data in enumerate(images_data):
@@ -88,7 +102,20 @@ class PropertyCreateUpdateSerializer(serializers.ModelSerializer):
             )
         
         return property_obj
+    
+    def update(self, instance, validated_data):
+        new_address = validated_data.get('address', instance.address)
+        new_city = validated_data.get('city', instance.city)
+        new_state = validated_data.get('state', instance.state)
 
+        if (new_address != instance.address) or (new_city != instance.city) or (new_state != instance.state):
+            full_address = f"{new_address}, {new_city}, {new_state}"
+            lat, lon = geocode_address(full_address)
+            validated_data['latitude'] = lat
+            validated_data['longitude'] = lon
+
+        return super().update(instance, validated_data)
+    
 
 class PropertySearchSerializer(serializers.Serializer):
     
